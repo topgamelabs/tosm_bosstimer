@@ -99,7 +99,10 @@ function App() {
   const [respawnMinute, setRespawnMinute] = useState('')
   const [username, setUsername] = useState('')
   const [selectedEPs, setSelectedEPs] = useState(Object.keys(EP_INFO).map(Number))
+  const [selectedBosses, setSelectedBosses] = useState([]) // empty = all
   const [showFilter, setShowFilter] = useState(false)
+  const [showBossFilter, setShowBossFilter] = useState(false)
+  const [bossSearch, setBossSearch] = useState('')
   const [now, setNow] = useState(Date.now())
   const intervalRef = useRef(null)
 
@@ -116,11 +119,12 @@ function App() {
     return () => clearInterval(intervalRef.current)
   }, [])
 
-  // Load kills, custom spawns, and votes from localStorage
+  // Load kills, custom spawns, votes, and selected bosses from localStorage
   useEffect(() => {
     const savedKills = {}
     const savedSpawns = {}
     const savedVotes = {}
+    const savedSelectedBosses = localStorage.getItem(`selectedBosses_${selectedServer}`)
     bosses.forEach(b => {
       // Load custom spawn defaults
       const spawnKey = `spawn_${selectedServer}_${b.map_lv}_${b.name}`
@@ -144,6 +148,9 @@ function App() {
     setKills(savedKills)
     setCustomSpawns(savedSpawns)
     setVotes(savedVotes)
+    if (savedSelectedBosses) {
+      setSelectedBosses(JSON.parse(savedSelectedBosses))
+    }
   }, [bosses, selectedServer])
 
   // Get spawn time for a boss (custom or default)
@@ -171,7 +178,6 @@ function App() {
     const kill = kills[killKey]
     const spawnMins = getSpawnMins(boss)
 
-    // If no kill data, no spawn time, or no respawnAt - show as no kill
     if (!kill || !spawnMins || !kill.respawnAt) {
       return { hasKill: false, remaining: null, isAlive: false, isWarning: false, confirmedBy: null }
     }
@@ -198,8 +204,12 @@ function App() {
     }
   })
 
-  // Filter by selected EPs
-  const filteredBosses = expandedBosses.filter(b => selectedEPs.includes(getEP(b.map_lv)))
+  // Filter by selected EPs and selected bosses
+  const filteredBosses = expandedBosses.filter(b => {
+    const epMatch = selectedEPs.includes(getEP(b.map_lv))
+    const bossMatch = selectedBosses.length === 0 || selectedBosses.includes(`${b.map_lv}_${b.name}`)
+    return epMatch && bossMatch
+  })
 
   // Sort
   const sortedBosses = [...filteredBosses].sort((a, b) => {
@@ -228,6 +238,36 @@ function App() {
   const selectAllEPs = () => setSelectedEPs(Object.keys(EP_INFO).map(Number))
   const selectNoEPs = () => setSelectedEPs([1])
 
+  // Toggle boss selection
+  const toggleBoss = (bossKey) => {
+    const newSelection = selectedBosses.includes(bossKey)
+      ? selectedBosses.filter(b => b !== bossKey)
+      : [...selectedBosses, bossKey]
+    setSelectedBosses(newSelection)
+    localStorage.setItem(`selectedBosses_${selectedServer}`, JSON.stringify(newSelection))
+  }
+
+  const selectAllBosses = () => {
+    setSelectedBosses([])
+    localStorage.setItem(`selectedBosses_${selectedServer}`, JSON.stringify([]))
+  }
+
+  const selectVisibleBosses = () => {
+    const visible = filteredBosses.map(b => `${b.map_lv}_${b.name}`)
+    setSelectedBosses(visible)
+    localStorage.setItem(`selectedBosses_${selectedServer}`, JSON.stringify(visible))
+  }
+
+  // Search filtered bosses for display in filter dropdown
+  const bossListForFilter = bosses
+    .filter(b => selectedEPs.includes(getEP(b.map_lv)))
+    .filter(b => {
+      const key = `${b.map_lv}_${b.name}`
+      const search = bossSearch.toLowerCase()
+      return key.toLowerCase().includes(search) || b.name.toLowerCase().includes(search) || b.map.toLowerCase().includes(search)
+    })
+    .sort((a, b) => a.map_lv - b.map_lv)
+
   // Handle vote
   const handleVote = (boss, channel, voteType) => {
     const bossKey = `${boss.map_lv}_${boss.name}_ch${channel}`
@@ -247,7 +287,6 @@ function App() {
       const updated = { likes: currentLikeList, dislikes: currentDislikeList }
       const newVotes = { ...prev, [bossKey]: updated }
 
-      // Save to localStorage
       const storageKey = `vote_${selectedServer}_${bossKey}`
       localStorage.setItem(storageKey, JSON.stringify(updated))
 
@@ -278,22 +317,18 @@ function App() {
     const spawnMins = getSpawnMins(boss) || 60
     let respawnAt
 
-    // User inputs: "in X hours Y minutes"
     const inputHours = parseInt(respawnHour) || 0
     const inputMinutes = parseInt(respawnMinute) || 0
 
     if (inputHours > 0 || inputMinutes > 0) {
-      // User specified time from now
       const totalMs = (inputHours * 60 * 60 * 1000) + (inputMinutes * 60 * 1000)
       respawnAt = Date.now() + totalMs
 
-      // Update custom spawn default
       const newSpawn = `${inputHours}h ${inputMinutes}m`.trim()
       const spawnStorageKey = `spawn_${selectedServer}_${boss.map_lv}_${boss.name}`
       localStorage.setItem(spawnStorageKey, newSpawn)
       setCustomSpawns(prev => ({ ...prev, [`${boss.map_lv}_${boss.name}`]: newSpawn }))
     } else {
-      // Use default
       respawnAt = Date.now() + spawnMins * 60 * 1000
     }
 
@@ -350,46 +385,94 @@ function App() {
         </div>
       </header>
 
-      {/* EP Filter */}
-      <div className="ep-filter-container">
-        <button
-          className="ep-filter-toggle"
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          🎯 EP Filter {selectedEPs.length < 13 ? `(${selectedEPs.length})` : ''}
-        </button>
+      {/* Filter Row */}
+      <div className="filter-row">
+        {/* EP Filter */}
+        <div className="filter-container">
+          <button
+            className={`filter-toggle ${showFilter ? 'active' : ''}`}
+            onClick={() => { setShowFilter(!showFilter); setShowBossFilter(false); }}
+          >
+            🎯 EP {selectedEPs.length < 13 ? `(${selectedEPs.length})` : ''}
+          </button>
 
-        {showFilter && (
-          <div className="ep-filter-dropdown">
-            <div className="ep-filter-header">
-              <span>เลือก EP ที่ต้องการแสดง:</span>
-              <div className="ep-filter-quick">
-                <button onClick={selectAllEPs} className="ep-quick-btn">ทั้งหมด</button>
-                <button onClick={selectNoEPs} className="ep-quick-btn">ล้าง</button>
+          {showFilter && (
+            <div className="filter-dropdown">
+              <div className="filter-header">
+                <span>เลือก EP:</span>
+                <div className="filter-quick">
+                  <button onClick={selectAllEPs}>ทั้งหมด</button>
+                  <button onClick={selectNoEPs}>ล้าง</button>
+                </div>
+              </div>
+              <div className="ep-checkboxes">
+                {Object.entries(EP_INFO).map(([ep, info]) => (
+                  <label key={ep} className={`ep-checkbox ${selectedEPs.includes(Number(ep)) ? 'selected' : ''}`}>
+                    <input
+                      type="checkbox"
+                      checked={selectedEPs.includes(Number(ep))}
+                      onChange={() => toggleEP(Number(ep))}
+                    />
+                    <span className="ep-label">EP {ep}</span>
+                    <span className="ep-count">Lv.{info.levels.join(',')}</span>
+                  </label>
+                ))}
               </div>
             </div>
-            <div className="ep-checkboxes">
-              {Object.entries(EP_INFO).map(([ep, info]) => (
-                <label key={ep} className="ep-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={selectedEPs.includes(Number(ep))}
-                    onChange={() => toggleEP(Number(ep))}
-                  />
-                  <span className="ep-checkbox-text">
-                    <span className="ep-name">EP {ep}</span>
-                    <span className="ep-levels">Lv.{info.levels.join(', ')} ({info.count} maps)</span>
-                  </span>
-                </label>
-              ))}
+          )}
+        </div>
+
+        {/* Boss Filter */}
+        <div className="filter-container">
+          <button
+            className={`filter-toggle ${showBossFilter ? 'active' : ''}`}
+            onClick={() => { setShowBossFilter(!showBossFilter); setShowFilter(false); }}
+          >
+            👹 Boss {selectedBosses.length > 0 ? `(${selectedBosses.length})` : '(ทั้งหมด)'}
+          </button>
+
+          {showBossFilter && (
+            <div className="filter-dropdown boss-dropdown">
+              <div className="filter-header">
+                <span>เลือกบอสที่ต้องการ:</span>
+                <div className="filter-quick">
+                  <button onClick={selectAllBosses}>ทั้งหมด</button>
+                  <button onClick={selectVisibleBosses}>ตาม EP</button>
+                </div>
+              </div>
+              <input
+                type="text"
+                placeholder="🔍 ค้นหาบอส..."
+                value={bossSearch}
+                onChange={e => setBossSearch(e.target.value)}
+                className="boss-search"
+              />
+              <div className="boss-list">
+                {bossListForFilter.map(b => {
+                  const key = `${b.map_lv}_${b.name}`
+                  const isSelected = selectedBosses.includes(key)
+                  return (
+                    <label key={key} className={`boss-item ${isSelected ? 'selected' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleBoss(key)}
+                      />
+                      <span className="boss-lv">Lv.{b.map_lv}</span>
+                      <span className="boss-name">{b.name}</span>
+                      <span className="boss-map">{b.map}</span>
+                    </label>
+                  )
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Boss Count */}
       <div className="boss-count">
-        แสดง {sortedBosses.length} บอส ({selectedEPs.length} EP ที่เลือก)
+        แสดง {sortedBosses.length} บอส {selectedBosses.length > 0 ? `(${selectedBosses.length} ที่เลือก)` : '(ทั้งหมด)'}
       </div>
 
       {/* Boss List */}
@@ -434,7 +517,7 @@ function App() {
                     className={`kill-btn ${status.isAlive ? 'alive' : ''}`}
                     onClick={() => openKillModal(boss, boss.channel)}
                   >
-                    {status.isAlive ? '💀 Kill' : '💀 Kill'}
+                    💀 Kill
                   </button>
                 )}
               </div>
