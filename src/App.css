@@ -233,6 +233,22 @@ body {
 /* Boss Dropdown */
 .boss-dropdown {
   max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.boss-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.boss-dropdown::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+}
+
+.boss-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.5);
+  border-radius: 3px;
 }
 
 .boss-search {
@@ -253,11 +269,6 @@ body {
 
 .boss-search::placeholder {
   color: var(--text-muted);
-}
-
-.boss-list {
-  max-height: 300px;
-  overflow-y: auto;
 }
 
 .boss-item {
@@ -377,46 +388,41 @@ body {
 
 .ep-checkboxes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 6px;
   max-height: 300px;
   overflow-y: auto;
 }
 
-.ep-checkbox-label {
+.ep-checkbox {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: 6px;
+  padding: 6px 8px;
   background: var(--bg-card);
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.ep-checkbox-label:hover {
+.ep-checkbox:hover {
   background: rgba(124, 58, 237, 0.1);
 }
 
-.ep-checkbox-label input {
-  width: 16px;
-  height: 16px;
+.ep-checkbox input {
+  width: 14px;
+  height: 14px;
   accent-color: var(--accent-purple);
 }
 
-.ep-checkbox-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.ep-name {
-  font-size: 12px;
+.ep-label {
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.ep-levels {
-  font-size: 10px;
+.ep-count {
+  font-size: 9px;
   color: var(--text-muted);
 }
 

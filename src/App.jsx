@@ -13,17 +13,8 @@ const ELEMENT_EMOJI = {
   null: '❓'
 }
 
-// Server list
-const SERVERS = [
-  { id: 'austeja', name: '🌍 Austeja' },
-  { id: 'zemyna', name: '🌍 Zemyna' },
-  { id: 'laima', name: '🌍 Laima' },
-  { id: 'vaivora', name: '🌍 Vaivora' },
-  { id: 'ausirine', name: '🌍 Ausirine' },
-  { id: 'giltine', name: '🌍 Giltine' },
-  { id: 'vakarine', name: '🌍 Vakarine' },
-  { id: 'saule', name: '🌍 Saule' }
-]
+// Fixed server (no selection)
+const SERVER_ID = 'global'
 
 // EP to level mapping
 const EP_LEVELS = {
@@ -39,7 +30,9 @@ const EP_LEVELS = {
   80: 10, 81: 10, 82: 10, 83: 10,
   85: 11, 86: 11, 87: 11, 88: 11, 89: 11,
   90: 12, 91: 12, 92: 12, 93: 12,
-  95: 13, 98: 13, 101: 13, 103: 13
+  95: 13, 98: 13, 101: 13, 103: 13,
+  105: 14, 107: 14, 109: 14, 111: 14, 113: 14,
+  115: 15, 118: 15, 120: 15, 123: 15
 }
 
 // EP descriptions
@@ -56,7 +49,9 @@ const EP_INFO = {
   10: { levels: [80, 81, 82, 83], count: 4 },
   11: { levels: [85, 86, 87, 88, 89], count: 5 },
   12: { levels: [90, 91, 92, 93], count: 4 },
-  13: { levels: [95, 98, 101, 103], count: 4 }
+  13: { levels: [95, 98, 101, 103], count: 4 },
+  14: { levels: [105, 107, 109, 111, 113], count: 5 },
+  15: { levels: [115, 118, 120, 123], count: 4 }
 }
 
 // Parse spawn time string to minutes
@@ -89,17 +84,15 @@ function getEP(level) {
 
 function App() {
   const [bosses, setBosses] = useState([])
-  const [selectedServer, setSelectedServer] = useState('austeja')
   const [kills, setKills] = useState({})
   const [customSpawns, setCustomSpawns] = useState({})
-  const [votes, setVotes] = useState({})
   const [showKillModal, setShowKillModal] = useState(null)
   const [selectedChannel, setSelectedChannel] = useState(1)
   const [respawnHour, setRespawnHour] = useState('')
   const [respawnMinute, setRespawnMinute] = useState('')
   const [username, setUsername] = useState('')
   const [selectedEPs, setSelectedEPs] = useState(Object.keys(EP_INFO).map(Number))
-  const [selectedBosses, setSelectedBosses] = useState([]) // empty = all
+  const [selectedBosses, setSelectedBosses] = useState([])
   const [showFilter, setShowFilter] = useState(false)
   const [showBossFilter, setShowBossFilter] = useState(false)
   const [bossSearch, setBossSearch] = useState('')
@@ -119,39 +112,30 @@ function App() {
     return () => clearInterval(intervalRef.current)
   }, [])
 
-  // Load kills, custom spawns, votes, and selected bosses from localStorage
+  // Load kills and custom spawns from localStorage
   useEffect(() => {
     const savedKills = {}
     const savedSpawns = {}
-    const savedVotes = {}
-    const savedSelectedBosses = localStorage.getItem(`selectedBosses_${selectedServer}`)
+    const savedSelectedBosses = localStorage.getItem('selectedBosses')
     bosses.forEach(b => {
       // Load custom spawn defaults
-      const spawnKey = `spawn_${selectedServer}_${b.map_lv}_${b.name}`
+      const spawnKey = `spawn_${b.map_lv}_${b.name}`
       const storedSpawn = localStorage.getItem(spawnKey)
       if (storedSpawn) savedSpawns[`${b.map_lv}_${b.name}`] = storedSpawn
 
-      // Load votes
-      for (let ch = 1; ch <= Math.max(b.channels, 3); ch++) {
-        const voteKey = `vote_${selectedServer}_${b.map_lv}_${b.name}_ch${ch}`
-        const storedVote = localStorage.getItem(voteKey)
-        if (storedVote) savedVotes[`${b.map_lv}_${b.name}_ch${ch}`] = storedVote
-      }
-
       // Load kills
       for (let ch = 1; ch <= Math.max(b.channels, 3); ch++) {
-        const key = `kill_${selectedServer}_${b.map_lv}_${b.name}_ch${ch}`
+        const key = `kill_${b.map_lv}_${b.name}_ch${ch}`
         const stored = localStorage.getItem(key)
         if (stored) savedKills[`${b.map_lv}_${b.name}_ch${ch}`] = JSON.parse(stored)
       }
     })
     setKills(savedKills)
     setCustomSpawns(savedSpawns)
-    setVotes(savedVotes)
     if (savedSelectedBosses) {
       setSelectedBosses(JSON.parse(savedSelectedBosses))
     }
-  }, [bosses, selectedServer])
+  }, [bosses])
 
   // Get spawn time for a boss (custom or default)
   const getSpawnMins = (boss) => {
@@ -162,14 +146,6 @@ function App() {
       if (parsed) return parsed
     }
     return parseSpawnToMinutes(boss.spawn)
-  }
-
-  // Get vote counts for a boss
-  const getVoteCounts = (bossKey) => {
-    const allVotes = votes[bossKey] || {}
-    const likes = allVotes.likes || []
-    const dislikes = allVotes.dislikes || []
-    return { likes: likes.length, dislikes: dislikes.length }
   }
 
   // Calculate boss + channel status
@@ -244,18 +220,18 @@ function App() {
       ? selectedBosses.filter(b => b !== bossKey)
       : [...selectedBosses, bossKey]
     setSelectedBosses(newSelection)
-    localStorage.setItem(`selectedBosses_${selectedServer}`, JSON.stringify(newSelection))
+    localStorage.setItem('selectedBosses', JSON.stringify(newSelection))
   }
 
   const selectAllBosses = () => {
     setSelectedBosses([])
-    localStorage.setItem(`selectedBosses_${selectedServer}`, JSON.stringify([]))
+    localStorage.setItem('selectedBosses', JSON.stringify([]))
   }
 
   const selectVisibleBosses = () => {
     const visible = filteredBosses.map(b => `${b.map_lv}_${b.name}`)
     setSelectedBosses(visible)
-    localStorage.setItem(`selectedBosses_${selectedServer}`, JSON.stringify(visible))
+    localStorage.setItem('selectedBosses', JSON.stringify(visible))
   }
 
   // Search filtered bosses for display in filter dropdown
@@ -287,7 +263,7 @@ function App() {
       const updated = { likes: currentLikeList, dislikes: currentDislikeList }
       const newVotes = { ...prev, [bossKey]: updated }
 
-      const storageKey = `vote_${selectedServer}_${bossKey}`
+      const storageKey = `vote_${bossKey}`
       localStorage.setItem(storageKey, JSON.stringify(updated))
 
       return newVotes
@@ -325,7 +301,7 @@ function App() {
       respawnAt = Date.now() + totalMs
 
       const newSpawn = `${inputHours}h ${inputMinutes}m`.trim()
-      const spawnStorageKey = `spawn_${selectedServer}_${boss.map_lv}_${boss.name}`
+      const spawnStorageKey = `spawn_${boss.map_lv}_${boss.name}`
       localStorage.setItem(spawnStorageKey, newSpawn)
       setCustomSpawns(prev => ({ ...prev, [`${boss.map_lv}_${boss.name}`]: newSpawn }))
     } else {
@@ -338,7 +314,7 @@ function App() {
 
     setKills(prev => ({ ...prev, [killKey]: killData }))
 
-    const storageKey = `kill_${selectedServer}_${boss.map_lv}_${boss.name}_ch${selectedChannel}`
+    const storageKey = `kill_${killKey}`
     localStorage.setItem(storageKey, JSON.stringify(killData))
 
     // Reset vote when kill
@@ -350,7 +326,7 @@ function App() {
         likes: current.likes.filter(u => u !== userKey),
         dislikes: current.dislikes.filter(u => u !== userKey)
       }
-      const voteStorageKey = `vote_${selectedServer}_${bossKey}`
+      const voteStorageKey = `vote_${bossKey}`
       localStorage.setItem(voteStorageKey, JSON.stringify(updated))
       return { ...prev, [bossKey]: updated }
     })
@@ -371,15 +347,6 @@ function App() {
             </div>
           </div>
           <div className="header-actions">
-            <select
-              className="server-select"
-              value={selectedServer}
-              onChange={e => setSelectedServer(e.target.value)}
-            >
-              {SERVERS.map(s => (
-                <option key={s.id} value={s.id}>{s.name}</option>
-              ))}
-            </select>
             <span className="live-indicator">● LIVE</span>
           </div>
         </div>
