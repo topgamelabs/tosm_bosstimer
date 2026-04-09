@@ -1,57 +1,514 @@
 [
-  {"map_lv": 7, "map": "Siauliai Miners Village", "name": "Cowardly Red Bube Warrior", "element": "Fire", "spawn": "1h 46m", "channels": 1},
-  {"map_lv": 9, "map": "Crystal Mine", "name": "Strong Spector Lord", "element": "Earth", "spawn": "30m", "channels": 1},
-  {"map_lv": 12, "map": "Nefritas Cliff", "name": "Strong Throne Weaver", "element": "Insect", "spawn": null, "channels": 2},
-  {"map_lv": 13, "map": "Tanet Garden", "name": "Strong Nephentes", "element": "Plant", "spawn": null, "channels": 1},
-  {"map_lv": 15, "map": "Tanet Church B1F", "name": "Cowardly Cyclops", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 17, "map": "Tanet Church", "name": "Strong Malletwywern", "element": "Dark", "spawn": "2h 20m", "channels": 1},
-  {"map_lv": 19, "map": "Tanet Church", "name": "Strong Necrovanter", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 22, "map": "Dadan Jungle", "name": "Strong Iltiswort", "element": "Plant", "spawn": null, "channels": 1},
-  {"map_lv": 24, "map": "Novaha Assembly Hall", "name": "Cowardly Mummygust", "element": "Ice", "spawn": "2h 20m", "channels": 2},
-  {"map_lv": 26, "map": "Novaha Annex", "name": "Strong Velniamonkey", "element": "Holy", "spawn": "2h 20m", "channels": 1},
-  {"map_lv": 28, "map": "Novaha Institute", "name": "Indignant Deathweaver", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 32, "map": "Cobal Forest", "name": "Cowardly Clymen", "element": "Plant", "spawn": null, "channels": 1},
-  {"map_lv": 34, "map": "Septyni Glen", "name": "Strong Mothtem", "element": "Insect", "spawn": null, "channels": 1},
-  {"map_lv": 36, "map": "Pelke Shine Ruins", "name": "Strong Tutu", "element": "Beast", "spawn": null, "channels": 1},
-  {"map_lv": 38, "map": "Absenta Reservoir", "name": "Indignant Hydra", "element": "Aberration", "spawn": null, "channels": 1},
-  {"map_lv": 44, "map": "Delmore Hamlet", "name": "Cowardly Reaverpede", "element": "Insect", "spawn": "1h 40m", "channels": 1},
-  {"map_lv": 46, "map": "Delmor Manor", "name": "Strong Grinender", "element": "Plant", "spawn": "2h 10m", "channels": 1},
-  {"map_lv": 48, "map": "Delmore Outskirt", "name": "Indignant Red Rambandage", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 52, "map": "Uskis Arable Land", "name": "Strong Taumas", "element": "Beast", "spawn": null, "channels": 1},
-  {"map_lv": 53, "map": "Spring Light Woods", "name": "Cowardly Manticen", "element": "Insect", "spawn": "2h 10m", "channels": 1},
-  {"map_lv": 55, "map": "Gate Route", "name": "Strong Chafer", "element": "Insect", "spawn": null, "channels": 1},
-  {"map_lv": 57, "map": "Sirdgela Forest", "name": "Strong Archon", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 59, "map": "Kvailas Forest", "name": "Indignant Bramble", "element": "Plant", "spawn": "4h 40m", "channels": 1},
-  {"map_lv": 62, "map": "Zacharial Crossroads", "name": "Cowardly Vearkaras", "element": "Aberration", "spawn": null, "channels": 1},
-  {"map_lv": 64, "map": "Royal Mausoleum 1F", "name": "Strong Thumlord", "element": "Aberration", "spawn": null, "channels": 2},
-  {"map_lv": 66, "map": "Royal Mausoleum 2F", "name": "Strong Gorkas", "element": "Lightning", "spawn": "1h 50m", "channels": 1},
-  {"map_lv": 68, "map": "Royal Mausoleum 3F", "name": "Angry Rexipher", "element": "Dark", "spawn": "4h 40m", "channels": 1},
-  {"map_lv": 70, "map": "Baron Allerno", "name": "Cowardly Scorpio", "element": "Insect", "spawn": "2h", "channels": 1},
-  {"map_lv": 70, "map": "Aqueduct Bridge Area", "name": "Strong Corrupted", "element": "Aberration", "spawn": null, "channels": 1},
-  {"map_lv": 71, "map": "Demon Prison District 1", "name": "Strong Blood", "element": "Plant", "spawn": null, "channels": 1},
-  {"map_lv": 72, "map": "Demon Prison District 3", "name": "Cowardly Nuaele", "element": null, "spawn": null, "channels": 1},
-  {"map_lv": 73, "map": "Demon Prison District 4", "name": "Strong Dionysus", "element": "Beast", "spawn": null, "channels": 1},
-  {"map_lv": 74, "map": "Demon Prison District 5", "name": "Angry Demon Lord Hauberk", "element": "Beast", "spawn": null, "channels": 2},
-  {"map_lv": 75, "map": "Goddess Ancient Garden", "name": "Strong Chapparition", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 76, "map": "Fedimain Suburbs", "name": "Cowardly Devilglove", "element": "Ice", "spawn": "1h 40m", "channels": 1},
-  {"map_lv": 77, "map": "Mage Tower 1F", "name": "Strong Salamander", "element": "Beast", "spawn": "2h 20m", "channels": 1},
-  {"map_lv": 78, "map": "Mage Tower 2F", "name": "Strong Mineloader", "element": "Aberration", "spawn": null, "channels": 1},
-  {"map_lv": 79, "map": "Mage Tower 3F", "name": "Indignant Helga Sircle", "element": "Demon", "spawn": "3h 20m", "channels": 1},
-  {"map_lv": 80, "map": "Penitance Route", "name": "Cowardly Glackuman", "element": "Beast", "spawn": "1h 50m", "channels": 1},
-  {"map_lv": 81, "map": "Main Building", "name": "Strong Fireload", "element": "Beast", "spawn": null, "channels": 1},
-  {"map_lv": 82, "map": "Grand Corridor", "name": "Strong Riteris", "element": "Aberration", "spawn": null, "channels": 1},
-  {"map_lv": 83, "map": "Sanctuary", "name": "Indignant Naktis", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 85, "map": "Laukyme Swamp", "name": "Cowardly Gaigalas", "element": "Beast", "spawn": null, "channels": 1},
-  {"map_lv": 86, "map": "Tyla Monastery", "name": "Strong Teraox", "element": "Beast", "spawn": "1h 10m", "channels": 1},
-  {"map_lv": 87, "map": "Bellai RainForest", "name": "Strong Ferretmaraader", "element": "Insect", "spawn": "1h", "channels": 1},
-  {"map_lv": 88, "map": "Zeraha", "name": "Strong Kirmeleech", "element": "Insect", "spawn": "1h", "channels": 1},
-  {"map_lv": 89, "map": "Seir Rainforest", "name": "Indignant Zaura", "element": "Demon", "spawn": null, "channels": 1},
-  {"map_lv": 90, "map": "Coastal Fortress", "name": "Strong Stone Whale", "element": "Lightning", "spawn": "2h", "channels": 1},
-  {"map_lv": 91, "map": "Dingofasil District", "name": "Strong Minotaurs", "element": "Beast", "spawn": "1h 40m", "channels": 1},
-  {"map_lv": 92, "map": "Storage Quarter", "name": "Strong Sitrygailla", "element": "Insect", "spawn": "1h 14m", "channels": 1},
-  {"map_lv": 93, "map": "Fortress Battlegrounds", "name": "Indignant Marnox", "element": "Beast", "spawn": "4h 40m", "channels": 1},
-  {"map_lv": 95, "map": "Alemeth Forest", "name": "Strong Colimencia", "element": "Plant", "spawn": "2h 20m", "channels": 1},
-  {"map_lv": 98, "map": "Barha Forest", "name": "Strong Sequoia", "element": "Aberration", "spawn": "1h 10m", "channels": 1},
-  {"map_lv": 101, "map": "Kalegimas Lounge", "name": "Strong Neop", "element": "Insect", "spawn": "2h", "channels": 1},
-  {"map_lv": 103, "map": "Investigation Room", "name": "Indignant Nebulas", "element": "Demon", "spawn": "4h 45m", "channels": 2}
+  {
+    "map_lv": 7,
+    "map": "Siauliai Miners Village",
+    "name": "Cowardly Red Bube Warrior",
+    "element": "Fire",
+    "spawn": "1.46 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 9,
+    "map": "Crystal Mine",
+    "name": "Strong Spector Lord",
+    "element": "Earth",
+    "spawn": "30m",
+    "channels": 1
+  },
+  {
+    "map_lv": 12,
+    "map": "Nefritas Cliff",
+    "name": "Strong Throne Weaver",
+    "element": "null",
+    "spawn": null,
+    "channels": 2
+  },
+  {
+    "map_lv": 13,
+    "map": "Tanet Garden",
+    "name": "Strong Nephentes",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 15,
+    "map": "Tanet Church B1F",
+    "name": "Cowardly Cyclops",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 17,
+    "map": "Tanet Church 1F",
+    "name": "Strong Malletwywern",
+    "element": "Dark",
+    "spawn": "2.20 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 19,
+    "map": "Tanet Church 2F",
+    "name": "Strong Necrovanter",
+    "element": "Dark",
+    "spawn": "1.45 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 22,
+    "map": "Dadan Jungle",
+    "name": "Strong Iltiswort",
+    "element": "Earth",
+    "spawn": "1.40 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 24,
+    "map": "Novaha Assembly Hall",
+    "name": "Cowardly Mummygust",
+    "element": "Ice",
+    "spawn": "2.20 h",
+    "channels": 2
+  },
+  {
+    "map_lv": 26,
+    "map": "Novaha Annex",
+    "name": "Strong Velniamonkey",
+    "element": "Holy",
+    "spawn": "2.20 h",
+    "channels": 2
+  },
+  {
+    "map_lv": 28,
+    "map": "Novaha Institute",
+    "name": "Indignant Deathweaver",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 32,
+    "map": "Cobal Forrest",
+    "name": "Cowardly Clymen",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 34,
+    "map": "Septyni Glen",
+    "name": "Strong Mothtem",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 36,
+    "map": "Pelke Shine Ruins",
+    "name": "Strong Tutu",
+    "element": "Ice",
+    "spawn": "2.00 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 38,
+    "map": "Absenta Reservoir",
+    "name": "Indignant Hydra",
+    "element": "Ice",
+    "spawn": "4.00 h",
+    "channels": 2
+  },
+  {
+    "map_lv": 44,
+    "map": "Delmore Hamlet",
+    "name": "Cowardly Reaverpede",
+    "element": "Earth",
+    "spawn": "1.40 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 46,
+    "map": "Delmor Manor",
+    "name": "Strong Grinender",
+    "element": "Fire",
+    "spawn": "2.10 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 48,
+    "map": "Delmore Outskirt",
+    "name": "Indignant Red Rambandage Demonas",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 52,
+    "map": "Uskis Arable Land",
+    "name": "Strong Taumas",
+    "element": "Earth",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 53,
+    "map": "Spring Light Woods",
+    "name": "Cowardly Manticen",
+    "element": "Lightning",
+    "spawn": "2.10 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 55,
+    "map": "Gate Route",
+    "name": "Strong Chafer",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 57,
+    "map": "Sirdgela Forest",
+    "name": "Strong Archon",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 59,
+    "map": "Kvailas Forest",
+    "name": "Indignant Bramble",
+    "element": "Earth",
+    "spawn": "4.40 h",
+    "channels": 2
+  },
+  {
+    "map_lv": 62,
+    "map": "Zacharial Crossroads",
+    "name": "Cowardly Vearkaras",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 64,
+    "map": "Royal Mausoleum 1F",
+    "name": "Strong Thumlord",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 66,
+    "map": "Royal Mausoleum 2F",
+    "name": "Strong Gorkas",
+    "element": "Lightning",
+    "spawn": null,
+    "channels": 2
+  },
+  {
+    "map_lv": 68,
+    "map": "Royal Mausoleum 3F",
+    "name": "Angry Rexipher",
+    "element": "Dark",
+    "spawn": "4.40 h",
+    "channels": 2
+  },
+  {
+    "map_lv": 70,
+    "map": "Baron Allerno",
+    "name": "Cowardly Scorpio",
+    "element": "Fire",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 70,
+    "map": "Aqueduct Bridge Area",
+    "name": "Strong Corrupted",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 71,
+    "map": "Demon Prison District 1",
+    "name": "Strong Blood",
+    "element": "Earth",
+    "spawn": "1.50 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 72,
+    "map": "Demon Prison District 3",
+    "name": "Cowardly Nuaele",
+    "element": "Holy",
+    "spawn": "2.00 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 73,
+    "map": "Demon Prison District 4",
+    "name": "Strong Dionysus",
+    "element": "Holy",
+    "spawn": "2.20 h",
+    "channels": 2
+  },
+  {
+    "map_lv": 74,
+    "map": "Demon Prison District 5",
+    "name": "Angry Demon Lord Hauberk",
+    "element": "Earth",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 75,
+    "map": "Goddess Ancient Garden",
+    "name": "Strong Chapparition",
+    "element": "Dark",
+    "spawn": "2.20 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 76,
+    "map": "Fedimain Suburbs",
+    "name": "Cowardly Devilglove",
+    "element": "Ice",
+    "spawn": "1.40 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 77,
+    "map": "Mage Tower 1F",
+    "name": "Strong Salamander",
+    "element": "Fire",
+    "spawn": "2.20 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 78,
+    "map": "Mage Tower 2F",
+    "name": "Strong Mineloader",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 79,
+    "map": "Mage Tower 3F",
+    "name": "Indignant Helga Sircle",
+    "element": "Earth",
+    "spawn": null,
+    "channels": 2
+  },
+  {
+    "map_lv": 80,
+    "map": "Penitance Route",
+    "name": "Cowardly Glackuman",
+    "element": "Earth",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 81,
+    "map": "Main Building",
+    "name": "Strong Fireload",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 82,
+    "map": "Grand Corridor",
+    "name": "Strong Riteris",
+    "element": "Lightning",
+    "spawn": null,
+    "channels": 2
+  },
+  {
+    "map_lv": 83,
+    "map": "Santuary",
+    "name": "Indignant Naktis",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 85,
+    "map": "Laukyme Swamp",
+    "name": "Cowardly Gaigalas",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 86,
+    "map": "Tyla Monastery",
+    "name": "Strong Teraox",
+    "element": "Dark",
+    "spawn": "1.10 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 87,
+    "map": "Bellai RainForest",
+    "name": "Strong Ferretmarauder",
+    "element": "Ice",
+    "spawn": "1 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 88,
+    "map": "Zeraha",
+    "name": "Strong Kirmeleech",
+    "element": "Earth",
+    "spawn": "1 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 89,
+    "map": "Seir Rainforest",
+    "name": "Indignant Zaura",
+    "element": "Holy",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 90,
+    "map": "Coastal Fortress",
+    "name": "Strong Stone Whale",
+    "element": "Lightning",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 91,
+    "map": "Dingofasil District",
+    "name": "Strong Minotaurs",
+    "element": "Dark",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 92,
+    "map": "Storage Quarter",
+    "name": "Strong Sitrygailla",
+    "element": "Earth",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 93,
+    "map": "Fortress Battlegrounds",
+    "name": "Indignant Marnox",
+    "element": "Fire",
+    "spawn": null,
+    "channels": 2
+  },
+  {
+    "map_lv": 95,
+    "map": "Alemeth Forest",
+    "name": "Strong Colimencia",
+    "element": "Holy",
+    "spawn": "2.20 h",
+    "channels": 1
+  },
+  {
+    "map_lv": 98,
+    "map": "Barha Forest",
+    "name": "Strong Sequoia",
+    "element": "Earth",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 101,
+    "map": "Kalegimas Lounge",
+    "name": "Strong Neop",
+    "element": "Fire",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 103,
+    "map": "Investigation Room",
+    "name": "Indignant Nebulas",
+    "element": "Ice",
+    "spawn": null,
+    "channels": 2
+  },
+  {
+    "map_lv": 105,
+    "map": "Nheto Forest",
+    "name": "Strong Dionia",
+    "element": "Dark",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 107,
+    "map": "Svalphinghas Forest",
+    "name": "Strong Ellaganos",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 109,
+    "map": "Lhadar Forest",
+    "name": "Strong Ebonyphone",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 111,
+    "map": "Tevhrin Stalactite Cave 1",
+    "name": "Strong Gazing Golem",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 113,
+    "map": "Tevhrin Stalactite Cave 2",
+    "name": "Indignant Zesty of Destruction",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 115,
+    "map": "Jonael Memorial Dist.",
+    "name": "Strong Ironbaum",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 118,
+    "map": "Jeromel Square",
+    "name": "Strong Diena",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 120,
+    "map": "Taniel I Memorial Dist.",
+    "name": "Strong Ginklass",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  },
+  {
+    "map_lv": 123,
+    "map": "Timerys Temple",
+    "name": "Indignant Algis",
+    "element": "null",
+    "spawn": null,
+    "channels": 1
+  }
 ]
