@@ -169,7 +169,7 @@ function App() {
   // Build expanded list with channel
   const expandedBosses = []
   bosses.forEach(b => {
-    let maxChannel = b.channels
+    let maxChannel = 1
     for (let ch = 1; ch <= 5; ch++) {
       if (kills[`${b.map_lv}_${b.name}_ch${ch}`]) {
         maxChannel = Math.max(maxChannel, ch)
@@ -244,41 +244,6 @@ function App() {
     })
     .sort((a, b) => a.map_lv - b.map_lv)
 
-  // Handle vote
-  const handleVote = (boss, channel, voteType) => {
-    const bossKey = `${boss.map_lv}_${boss.name}_ch${channel}`
-    const userKey = username || 'Anonymous'
-
-    setVotes(prev => {
-      const current = prev[bossKey] || { likes: [], dislikes: [] }
-      const currentLikeList = current.likes.filter(u => u !== userKey)
-      const currentDislikeList = current.dislikes.filter(u => u !== userKey)
-
-      if (voteType === 'like') {
-        currentLikeList.push(userKey)
-      } else {
-        currentDislikeList.push(userKey)
-      }
-
-      const updated = { likes: currentLikeList, dislikes: currentDislikeList }
-      const newVotes = { ...prev, [bossKey]: updated }
-
-      const storageKey = `vote_${bossKey}`
-      localStorage.setItem(storageKey, JSON.stringify(updated))
-
-      return newVotes
-    })
-  }
-
-  // Check if user already voted
-  const getUserVote = (bossKey) => {
-    const userKey = username || 'Anonymous'
-    const allVotes = votes[bossKey] || {}
-    if (allVotes.likes?.includes(userKey)) return 'like'
-    if (allVotes.dislikes?.includes(userKey)) return 'dislike'
-    return null
-  }
-
   // Open kill modal
   const openKillModal = (boss, channel) => {
     setSelectedChannel(channel)
@@ -316,20 +281,6 @@ function App() {
 
     const storageKey = `kill_${killKey}`
     localStorage.setItem(storageKey, JSON.stringify(killData))
-
-    // Reset vote when kill
-    const bossKey = killKey
-    const userKey = username || 'Anonymous'
-    setVotes(prev => {
-      const current = prev[bossKey] || { likes: [], dislikes: [] }
-      const updated = {
-        likes: current.likes.filter(u => u !== userKey),
-        dislikes: current.dislikes.filter(u => u !== userKey)
-      }
-      const voteStorageKey = `vote_${bossKey}`
-      localStorage.setItem(voteStorageKey, JSON.stringify(updated))
-      return { ...prev, [bossKey]: updated }
-    })
 
     setShowKillModal(null)
   }
@@ -448,8 +399,6 @@ function App() {
           const status = getChannelStatus(boss, boss.channel)
           const displaySpawn = customSpawns[`${boss.map_lv}_${boss.name}`] || boss.spawn
           const bossKey = `${boss.map_lv}_${boss.name}_ch${boss.channel}`
-          const voteCounts = getVoteCounts(bossKey)
-          const userVote = getUserVote(bossKey)
 
           return (
             <div
@@ -489,21 +438,7 @@ function App() {
                 )}
               </div>
 
-              {/* Vote Section */}
-              <div className="vote-section">
-                <button
-                  className={`vote-btn like ${userVote === 'like' ? 'active' : ''}`}
-                  onClick={() => handleVote(boss, boss.channel, 'like')}
-                >
-                  👍 <span>{voteCounts.likes}</span>
-                </button>
-                <button
-                  className={`vote-btn dislike ${userVote === 'dislike' ? 'active' : ''}`}
-                  onClick={() => handleVote(boss, boss.channel, 'dislike')}
-                >
-                  👎 <span>{voteCounts.dislikes}</span>
-                </button>
-              </div>
+
 
               {status.hasKill && status.confirmedBy && (
                 <div className="confirmed-by">
