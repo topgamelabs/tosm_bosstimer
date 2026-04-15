@@ -90,7 +90,7 @@ function App() {
   const [selectedChannel, setSelectedChannel] = useState(1)
   const [respawnHour, setRespawnHour] = useState('')
   const [respawnMinute, setRespawnMinute] = useState('')
-  const [username, setUsername] = useState('')
+
   const [selectedEPs, setSelectedEPs] = useState(Object.keys(EP_INFO).map(Number))
   const [selectedBosses, setSelectedBosses] = useState([])
   const [showFilter, setShowFilter] = useState(false)
@@ -155,7 +155,7 @@ function App() {
     const spawnMins = getSpawnMins(boss)
 
     if (!kill || !spawnMins || !kill.respawnAt) {
-      return { hasKill: false, remaining: null, isAlive: false, isWarning: false, confirmedBy: null }
+      return { hasKill: false, remaining: null, isAlive: false, isWarning: false }
     }
 
     const respawnAt = kill.respawnAt
@@ -163,7 +163,7 @@ function App() {
     const isAlive = remaining <= 0
     const isWarning = remaining > 0 && remaining <= 60000
 
-    return { hasKill: true, remaining, respawnAt, isAlive, isWarning, spawnMins, confirmedBy: kill.confirmedBy }
+    return { hasKill: true, remaining, respawnAt, isAlive, isWarning, spawnMins }
   }
 
   // Build expanded list with channel
@@ -244,12 +244,12 @@ function App() {
     })
     .sort((a, b) => a.map_lv - b.map_lv)
 
-  // Open kill modal
+
   const openKillModal = (boss, channel) => {
     setSelectedChannel(channel)
     setRespawnHour('')
     setRespawnMinute('')
-    setUsername('')
+
     setShowKillModal({ ...boss, _channel: channel })
   }
 
@@ -275,7 +275,7 @@ function App() {
 
     const killTime = respawnAt - spawnMins * 60 * 1000
     const killKey = `${boss.map_lv}_${boss.name}_ch${selectedChannel}`
-    const killData = { killTime, respawnAt, confirmedBy: username || 'Anonymous' }
+    const killData = { killTime, respawnAt }
 
     setKills(prev => ({ ...prev, [killKey]: killData }))
 
@@ -440,11 +440,7 @@ function App() {
 
 
 
-              {status.hasKill && status.confirmedBy && (
-                <div className="confirmed-by">
-                  👤 {status.confirmedBy}
-                </div>
-              )}
+
             </div>
           )
         })}
@@ -460,17 +456,7 @@ function App() {
             <p className="modal-map">📍 {showKillModal.map}</p>
             <p className="modal-spawn">⏱ Default: {showKillModal.spawn || 'ยังไม่มี default'}</p>
 
-            {/* Username Input */}
-            <div className="kill-time-input">
-              <p className="kill-time-label">👤 ชื่อของคุณ</p>
-              <input
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                placeholder="กรอกชื่อของคุณ"
-                className="username-input"
-              />
-            </div>
+
 
             {/* Channel Selector */}
             <div className="kill-time-input">
