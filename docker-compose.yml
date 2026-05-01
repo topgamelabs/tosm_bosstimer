@@ -2,14 +2,21 @@ services:
   boss-timer:
     image: node:20-alpine
     working_dir: /app
-    command: sh -c "npm install && npm run build && npm run preview -- --host 0.0.0.0 --port 5173"
+    command: node /app/server.cjs
     volumes:
-      - /root/boss-timer:/app
+      - ./:/app
     labels:
       - traefik.enable=true
-      - traefik.http.routers.bosstimer.rule=Host(`www.tglabs.info`)
-      - traefik.http.routers.bosstimer.entrypoints=websecure
-      - traefik.http.routers.bosstimer.tls.certresolver=letsencrypt
-      - traefik.http.services.bosstimer.loadbalancer.server.port=5173
+      - traefik.http.routers.bosswww.entrypoints=websecure
+      - traefik.http.routers.bosswww.rule=Host(`www.tglabs.info`) && PathPrefix(`/boss`)
+      - traefik.http.routers.bosswww.tls.certresolver=letsencrypt
+      - traefik.http.services.bosswww.loadbalancer.server.port=5173
+      - traefik.http.routers.bossredirect.entrypoints=websecure
+      - traefik.http.routers.bossredirect.rule=Host(`bosstimer.tglabs.info`)
+      - traefik.http.routers.bossredirect.tls.certresolver=letsencrypt
+      - traefik.http.routers.bossredirect.middlewares=redirect-to-boss
+      - traefik.http.middlewares.redirect-to-boss.redirectregex.regex=.*
+      - traefik.http.middlewares.redirect-to-boss.redirectregex.replacement=https://www.tglabs.info/boss
+      - traefik.http.middlewares.redirect-to-boss.redirectregex.permanent=true
     restart: unless-stopped
     network_mode: host
